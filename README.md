@@ -1,7 +1,7 @@
 
 ---
 
-# 🟩 **README cho dự án 2: Todo List RESTful API (Java Spring Boot + MongoDB)**
+# 🟩 **Todo List RESTful API (Java Spring Boot + MongoDB)**
 
 ```md
 # ✅ Todo List RESTful API – Spring Boot  
