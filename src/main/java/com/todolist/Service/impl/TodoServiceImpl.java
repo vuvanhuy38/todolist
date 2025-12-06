@@ -12,8 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -21,13 +19,6 @@ import java.util.stream.Collectors;
 public class TodoServiceImpl implements TodoService {
 
     private final TodoRepository todoRepository;
-
-    @Override
-    public List<TodoResponse> getAllTodos() {
-        return todoRepository.findAll().stream()
-                             .map(this::convertToResponse)
-                             .collect(Collectors.toList());
-    }
 
     @Override
     public Page<TodoResponse> getAllTodos(Pageable pageable) {
@@ -80,38 +71,7 @@ public class TodoServiceImpl implements TodoService {
         return convertToResponse(updatedTodo);
     }
 
-    @Override
-    public List<TodoResponse> searchTodos(String keyword) {
-        return todoRepository.findByTitleContainingIgnoreCase(keyword).stream()
-                             .map(this::convertToResponse)
-                             .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<TodoResponse> getTodosByCompleted(Boolean completed) {
-        return todoRepository.findByCompleted(completed).stream()
-                             .map(this::convertToResponse)
-                             .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<TodoResponse> getTodosByPriority(Integer priority) {
-        return todoRepository.findByPriority(priority).stream()
-                             .map(this::convertToResponse)
-                             .collect(Collectors.toList());
-    }
-
-    @Override
-    public long countTodos() {
-        return todoRepository.count();
-    }
-
-    @Override
-    public long countByCompleted(Boolean completed) {
-        return todoRepository.countByCompleted(completed);
-    }
-
-    // ============ Private Helper Methods ============
+    // ============ Helper Methods ============
 
     private TodoEntity findTodoById(String id) {
         return todoRepository.findById(id)

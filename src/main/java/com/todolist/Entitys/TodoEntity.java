@@ -23,7 +23,7 @@ public class TodoEntity {
 
     private Boolean completed = false;
 
-    private Integer priority; // 1: Thấp, 2: Trung bình, 3: Cao
+    private Integer priority;
 
     private LocalDateTime createdAt;
 

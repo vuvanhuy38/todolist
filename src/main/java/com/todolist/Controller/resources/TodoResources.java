@@ -1,39 +1,28 @@
-package com.todolist.Controller;
+package com.todolist.Controller.resources;
 
 import com.todolist.DTO.TodoRequest;
 import com.todolist.DTO.TodoResponse;
-import com.todolist.Entitys.TodoEntity;
 import com.todolist.Service.TodoService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/todos")
 @AllArgsConstructor
-public class TodoController {
+public class TodoResources {
 
     private final TodoService todoService;
 
     // GET /api/todos - Lấy tất cả todos
     @GetMapping
-    public ResponseEntity<List<TodoResponse>> getAllTodos(
-            @RequestParam(required = false) Boolean completed,
-            @RequestParam(required = false) String search) {
+    public ResponseEntity<Page<TodoResponse>> getAllTodos(
+            Pageable pageable) {
 
-        List<TodoResponse> todos;
-
-        if (search != null && !search.isEmpty()) {
-            todos = todoService.searchTodos(search);
-        } else if (completed != null) {
-            todos = todoService.getTodosByCompleted(completed);
-        } else {
-            todos = todoService.getAllTodos();
-        }
-
+        Page<TodoResponse> todos = todoService.getAllTodos(pageable);
         return ResponseEntity.ok(todos);
     }
 
